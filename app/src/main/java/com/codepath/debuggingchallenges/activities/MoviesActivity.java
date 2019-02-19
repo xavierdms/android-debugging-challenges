@@ -2,6 +2,7 @@ package com.codepath.debuggingchallenges.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.codepath.debuggingchallenges.R;
@@ -15,6 +16,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -22,28 +24,32 @@ public class MoviesActivity extends AppCompatActivity {
 
     private static final String API_KEY = "a07e22bc18f5cb106bfe4cc1f83ad8ed";
 
-    RecyclerView rvMovies;
-    MoviesAdapter adapter;
-    ArrayList<Movie> movies;
+    //private RecyclerView rvMovies;
+    //private MoviesAdapter adapter;
+    List<Movie> movies;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movies);
-        rvMovies = findViewById(R.id.rvMovies);
+        RecyclerView rvMovies = findViewById(R.id.rvMovies);
+
+        movies = new ArrayList<>();
+
 
         // Create the adapter to convert the array to views
-        MoviesAdapter adapter = new MoviesAdapter(movies);
+        final MoviesAdapter adapter = new MoviesAdapter(movies);
 
         // Attach the adapter to a ListView
-        rvMovies.setAdapter(adapter);
 
+        rvMovies.setLayoutManager(new LinearLayoutManager(this));
+        rvMovies.setAdapter(adapter);
         fetchMovies();
     }
 
 
     private void fetchMovies() {
-        String url = " https://api.themoviedb.org/3/movie/now_playing?api_key=";
+        String url = new StringBuilder().append("https://api.themoviedb.org/3/movie/now_playing?api_key=").append(API_KEY).toString();
         AsyncHttpClient client = new AsyncHttpClient();
         client.get(url, null, new JsonHttpResponseHandler() {
             @Override
@@ -56,5 +62,6 @@ public class MoviesActivity extends AppCompatActivity {
                 }
             }
         });
+
     }
 }
