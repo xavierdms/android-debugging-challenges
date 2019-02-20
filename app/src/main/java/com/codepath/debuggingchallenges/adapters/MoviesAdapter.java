@@ -23,9 +23,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
 
 
 
-    public MoviesAdapter(List<Movie> movies) {
-        this.movies = movies;
-    }
+    public MoviesAdapter(List<Movie> movieslist) { movies = movieslist;}
 
     @NonNull
     @Override
@@ -47,6 +45,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         Movie movie = movies.get(position);
 
         // Populate the data into the template view using the data object
+
         viewHolder.tvName.setText(movie.getTitle());
 
         Resources resources = viewHolder.tvName.getResources();
@@ -75,9 +74,9 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         View view;
 
         // Lookup view for data population
-        TextView tvName;
-        TextView tvRating;
-        ImageView ivPoster;
+        public TextView tvName;
+        public TextView tvRating;
+        public ImageView ivPoster;
 
         public ViewHolder(View itemView) {
             super(itemView);

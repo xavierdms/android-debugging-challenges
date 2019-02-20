@@ -16,7 +16,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -24,26 +23,25 @@ public class MoviesActivity extends AppCompatActivity {
 
     private static final String API_KEY = "a07e22bc18f5cb106bfe4cc1f83ad8ed";
 
-    //private RecyclerView rvMovies;
-    //private MoviesAdapter adapter;
-    List<Movie> movies;
+    RecyclerView rvMovies;
+    MoviesAdapter adapter;
+    ArrayList<Movie> movies;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movies);
-        RecyclerView rvMovies = findViewById(R.id.rvMovies);
-
+        rvMovies = findViewById(R.id.rvMovies);
         movies = new ArrayList<>();
-
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        rvMovies.setLayoutManager(layoutManager);
 
         // Create the adapter to convert the array to views
-        final MoviesAdapter adapter = new MoviesAdapter(movies);
+        adapter = new MoviesAdapter(movies);
 
         // Attach the adapter to a ListView
-
-        rvMovies.setLayoutManager(new LinearLayoutManager(this));
         rvMovies.setAdapter(adapter);
+
         fetchMovies();
     }
 
@@ -56,7 +54,8 @@ public class MoviesActivity extends AppCompatActivity {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 try {
                     JSONArray moviesJson = response.getJSONArray("results");
-                    movies = Movie.fromJSONArray(moviesJson);
+                    movies.addAll(Movie.fromJSONArray(moviesJson));
+                    adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
