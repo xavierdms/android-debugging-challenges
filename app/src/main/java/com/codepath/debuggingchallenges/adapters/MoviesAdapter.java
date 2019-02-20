@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.support.annotation.NonNull;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +35,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         // Inflate the custom layout
         View movieView = inflater.inflate(R.layout.item_movie, parent, false);
 
+
         // Return a new holder instance
         ViewHolder viewHolder = new ViewHolder(movieView);
         return viewHolder;
@@ -53,7 +55,14 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
 
         if (movieRating > 6) {
 
-            viewHolder.view.setBackgroundColor(Color.GREEN);
+            //viewHolder.itemView.setBackgroundColor(Color.GREEN);
+
+            viewHolder.linearLayout2.setBackgroundColor(Color.GREEN);
+
+        }
+        else
+        {
+            viewHolder.linearLayout2.setBackgroundColor(Color.TRANSPARENT);
         }
 
         String ratingText = String.format(resources.getString(R.string.rating), movieRating);
@@ -77,6 +86,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
         public TextView tvName;
         public TextView tvRating;
         public ImageView ivPoster;
+        public ConstraintLayout linearLayout2;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -85,6 +95,7 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.ViewHolder
             tvName = itemView.findViewById(R.id.tvTitle);
             tvRating = itemView.findViewById(R.id.tvRating);
             ivPoster = itemView.findViewById(R.id.ivPoster);
+            linearLayout2 = itemView.findViewById(R.id.linearLayout2);
         }
     }
 

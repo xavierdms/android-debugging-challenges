@@ -43,6 +43,7 @@ public class MoviesActivity extends AppCompatActivity {
         rvMovies.setAdapter(adapter);
 
         fetchMovies();
+
     }
 
 
